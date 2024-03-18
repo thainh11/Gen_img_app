@@ -18,7 +18,8 @@ def generate(prompt,negative_prompt,num_inference_steps):
 #   "segmind/SSD-1B", #smaller model of SDXL, reduce 40% weight and size, increase inference time
 #   "segmind/Segmind-Vega", #Reduce 60% weight and size, increase 100% inference time
 #   "dataautogpt3/OpenDalleV1.1", #best quality model, but the inference time is long
-	"dataautogpt3/ProteusV0.4",
+	# "dataautogpt3/ProteusV0.4",
+    "dataautogpt3/Proteus-RunDiffusion",
     vae=vae,
     cache_dir="/home/www/data/data/saigonmusic/Dev_AI/thainh/cache_huggingface", 
     torch_dtype=torch.float16, 
@@ -29,13 +30,13 @@ def generate(prompt,negative_prompt,num_inference_steps):
     pipeline_text2image.to("cuda")
     # pipeline_text2image.enable_freeu(b1= 1.3, b2=1.4, s1=0.9, s2=0.2)
 
-    for word in prompt.split(" "):
-        if word=="cartoon" or word=="Cartoon":
-            pipeline_text2image.load_lora_weights("/home/www/data/data/saigonmusic/Dev_AI/thainh/LoRA",weight_name="SDXL_cartoon_1500.safetensors")
-        if word=="christmas" or word=="Christmas":
-            pipeline_text2image.load_lora_weights("/home/www/data/data/saigonmusic/Dev_AI/thainh/LoRA", weight_name="SDXL-2000-christmas.safetensors")
-        if word=="art" or word=="Art":
-            pipeline_text2image.load_lora_weights("/home/www/data/data/saigonmusic/Dev_AI/thainh/LoRA",weight_name="SDXL_art_1500.safetensors")
+    # for word in prompt.split(" "):
+    #     if word=="cartoon" or word=="Cartoon":
+    #         pipeline_text2image.load_lora_weights("/home/www/data/data/saigonmusic/Dev_AI/thainh/LoRA",weight_name="SDXL_cartoon_1500.safetensors")
+    #     if word=="christmas" or word=="Christmas":
+    #         pipeline_text2image.load_lora_weights("/home/www/data/data/saigonmusic/Dev_AI/thainh/LoRA", weight_name="SDXL-2000-christmas.safetensors")
+    #     if word=="art" or word=="Art":
+    #         pipeline_text2image.load_lora_weights("/home/www/data/data/saigonmusic/Dev_AI/thainh/LoRA",weight_name="SDXL_art_1500.safetensors")
             
     image = pipeline_text2image(prompt=prompt, negative_prompt=negative_prompt, num_inference_steps=num_inference_steps, guidance_scale=6, width=1024,
     height=1024, num_images_per_prompt=2).images[0]
